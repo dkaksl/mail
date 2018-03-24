@@ -11,7 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.kilumanga.play.constant.ExceptionMessage;
+import com.kilumanga.play.mail.constant.ExceptionMessage;
 
 public class EmailAddressTest {
 	@Rule

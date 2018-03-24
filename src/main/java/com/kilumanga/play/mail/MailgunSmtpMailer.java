@@ -17,8 +17,8 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.kilumanga.play.constant.ExceptionMessage;
-import com.kilumanga.play.constant.Property;
+import com.kilumanga.play.mail.constant.ExceptionMessage;
+import com.kilumanga.play.mail.constant.Property;
 import com.kilumanga.play.mail.data.EmailAddress;
 import com.sun.mail.smtp.SMTPTransport;
 

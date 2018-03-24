@@ -9,7 +9,7 @@ package com.kilumanga.play.mail.data;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
-import com.kilumanga.play.constant.ExceptionMessage;
+import com.kilumanga.play.mail.constant.ExceptionMessage;
 
 public class EmailAddress {
 	private final String emailAddress;
