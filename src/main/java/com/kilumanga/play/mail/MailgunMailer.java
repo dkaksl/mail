@@ -55,6 +55,11 @@ public class MailgunMailer {
 		}
 	}
 
+	public String sendSmtpMail(String[] toAddresses, String subject, String text)
+			throws AddressException, MessagingException {
+		return sendSmtpMail(toAddresses, new String[] {}, new String[] {}, subject, text);
+	}
+
 	private void setRecipients(Message message, Message.RecipientType recipientType, String[] addresses)
 			throws AddressException, MessagingException {
 		if (addresses.length == 0) {
