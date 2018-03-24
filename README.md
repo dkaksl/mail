@@ -6,4 +6,4 @@ Library for sending emails
 
     mvn
 
-    -  `mail-<version-number>.jar` will be created under `target`
+-  `mail-<version-number>.jar` will be created under `target`
