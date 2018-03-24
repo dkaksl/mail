@@ -21,12 +21,12 @@ import com.kilumanga.play.constant.ExceptionMessage;
 import com.kilumanga.play.constant.Property;
 import com.sun.mail.smtp.SMTPTransport;
 
-public class MailgunMailer {
+public class MailgunSmtpMailer {
 	private final String fromAddress;
 	private final String smtpUsername;
 	private final String smtpPassword;
 
-	public MailgunMailer(String fromAddress, String smtpUsername, String smtpPassword) {
+	public MailgunSmtpMailer(String fromAddress, String smtpUsername, String smtpPassword) {
 		if (fromAddress == null) {
 			throw new IllegalArgumentException(ExceptionMessage.NULL_PARAMETER.getExceptionMessage());
 		}
@@ -42,7 +42,7 @@ public class MailgunMailer {
 		this.smtpPassword = smtpPassword;
 	}
 
-	public String sendSmtpMail(String[] toAddresses, String[] ccAddresses, String[] bccAddresses, String subject,
+	public String sendMail(String[] toAddresses, String[] ccAddresses, String[] bccAddresses, String subject,
 			String text) throws AddressException, MessagingException {
 		if (toAddresses == null) {
 			throw new IllegalArgumentException(ExceptionMessage.NULL_PARAMETER.getExceptionMessage());
@@ -87,9 +87,9 @@ public class MailgunMailer {
 		properties.put(property.getName(), property.getValue());
 	}
 
-	public String sendSmtpMail(String[] toAddresses, String subject, String text)
+	public String sendMail(String[] toAddresses, String subject, String text)
 			throws AddressException, MessagingException {
-		return sendSmtpMail(toAddresses, new String[] {}, new String[] {}, subject, text);
+		return sendMail(toAddresses, new String[] {}, new String[] {}, subject, text);
 	}
 
 	private void setRecipients(Message message, Message.RecipientType recipientType, String[] addresses)
