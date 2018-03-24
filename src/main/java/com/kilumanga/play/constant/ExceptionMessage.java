@@ -9,6 +9,8 @@ package com.kilumanga.play.constant;
 
 public enum ExceptionMessage {
 	NULL_PARAMETER(), //
+
+	INVALID_EMAIL_ADDRESS(), //
 	;
 
 	public String getExceptionMessage() {
