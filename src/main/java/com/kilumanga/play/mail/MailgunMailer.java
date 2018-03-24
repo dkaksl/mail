@@ -17,6 +17,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.kilumanga.play.constant.ExceptionMessage;
 import com.sun.mail.smtp.SMTPTransport;
 
 public class MailgunMailer {
@@ -25,6 +26,16 @@ public class MailgunMailer {
 	private final String smtpPassword;
 
 	public MailgunMailer(String fromAddress, String smtpUsername, String smtpPassword) {
+		if (fromAddress == null) {
+			throw new IllegalArgumentException(ExceptionMessage.NULL_PARAMETER.getExceptionMessage());
+		}
+		if (smtpUsername == null) {
+			throw new IllegalArgumentException(ExceptionMessage.NULL_PARAMETER.getExceptionMessage());
+		}
+		if (smtpPassword == null) {
+			throw new IllegalArgumentException(ExceptionMessage.NULL_PARAMETER.getExceptionMessage());
+		}
+
 		this.fromAddress = fromAddress;
 		this.smtpUsername = smtpUsername;
 		this.smtpPassword = smtpPassword;
@@ -32,6 +43,22 @@ public class MailgunMailer {
 
 	public String sendSmtpMail(String[] toAddresses, String[] ccAddresses, String[] bccAddresses, String subject,
 			String text) throws AddressException, MessagingException {
+		if (toAddresses == null) {
+			throw new IllegalArgumentException(ExceptionMessage.NULL_PARAMETER.getExceptionMessage());
+		}
+		if (ccAddresses == null) {
+			throw new IllegalArgumentException(ExceptionMessage.NULL_PARAMETER.getExceptionMessage());
+		}
+		if (bccAddresses == null) {
+			throw new IllegalArgumentException(ExceptionMessage.NULL_PARAMETER.getExceptionMessage());
+		}
+		if (subject == null) {
+			throw new IllegalArgumentException(ExceptionMessage.NULL_PARAMETER.getExceptionMessage());
+		}
+		if (text == null) {
+			throw new IllegalArgumentException(ExceptionMessage.NULL_PARAMETER.getExceptionMessage());
+		}
+
 		Properties properties = System.getProperties();
 		properties.put("mail.smtps.host", "smtp.mailgun.org");
 		properties.put("mail.smtps.auth", "true");
