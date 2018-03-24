@@ -19,14 +19,15 @@ import javax.mail.internet.MimeMessage;
 
 import com.kilumanga.play.constant.ExceptionMessage;
 import com.kilumanga.play.constant.Property;
+import com.kilumanga.play.mail.data.EmailAddress;
 import com.sun.mail.smtp.SMTPTransport;
 
 public class MailgunSmtpMailer {
-	private final String fromAddress;
+	private final EmailAddress fromAddress;
 	private final String smtpUsername;
 	private final String smtpPassword;
 
-	public MailgunSmtpMailer(String fromAddress, String smtpUsername, String smtpPassword) {
+	public MailgunSmtpMailer(EmailAddress fromAddress, String smtpUsername, String smtpPassword) {
 		if (fromAddress == null) {
 			throw new IllegalArgumentException(ExceptionMessage.NULL_PARAMETER.getExceptionMessage());
 		}
@@ -42,8 +43,8 @@ public class MailgunSmtpMailer {
 		this.smtpPassword = smtpPassword;
 	}
 
-	public String sendMail(String[] toAddresses, String[] ccAddresses, String[] bccAddresses, String subject,
-			String text) throws AddressException, MessagingException {
+	public String sendMail(EmailAddress[] toAddresses, EmailAddress[] ccAddresses, EmailAddress[] bccAddresses,
+			String subject, String text) throws AddressException, MessagingException {
 		if (toAddresses == null) {
 			throw new IllegalArgumentException(ExceptionMessage.NULL_PARAMETER.getExceptionMessage());
 		}
@@ -66,7 +67,7 @@ public class MailgunSmtpMailer {
 
 		Session session = Session.getInstance(properties, null);
 		Message message = new MimeMessage(session);
-		message.setFrom(new InternetAddress(this.fromAddress));
+		message.setFrom(new InternetAddress(this.fromAddress.getEmailAddress()));
 
 		setRecipients(message, Message.RecipientType.TO, toAddresses);
 		setRecipients(message, Message.RecipientType.CC, ccAddresses);
@@ -87,12 +88,12 @@ public class MailgunSmtpMailer {
 		properties.put(property.getName(), property.getValue());
 	}
 
-	public String sendMail(String[] toAddresses, String subject, String text)
+	public String sendMail(EmailAddress[] toAddresses, String subject, String text)
 			throws AddressException, MessagingException {
-		return sendMail(toAddresses, new String[] {}, new String[] {}, subject, text);
+		return sendMail(toAddresses, new EmailAddress[] {}, new EmailAddress[] {}, subject, text);
 	}
 
-	private void setRecipients(Message message, Message.RecipientType recipientType, String[] addresses)
+	private void setRecipients(Message message, Message.RecipientType recipientType, EmailAddress[] addresses)
 			throws AddressException, MessagingException {
 		if (addresses.length == 0) {
 			return;
@@ -100,10 +101,10 @@ public class MailgunSmtpMailer {
 		message.setRecipients(recipientType, getInternetAddresses(addresses));
 	}
 
-	private InternetAddress[] getInternetAddresses(String[] addresses) throws AddressException {
+	private InternetAddress[] getInternetAddresses(EmailAddress[] addresses) throws AddressException {
 		StringBuilder addressListBuilder = new StringBuilder();
-		for (String address : addresses) {
-			addressListBuilder.append(address);
+		for (EmailAddress address : addresses) {
+			addressListBuilder.append(address.getEmailAddress());
 			addressListBuilder.append(",");
 		}
 		addressListBuilder.deleteCharAt(addressListBuilder.length() - 1);
