@@ -18,6 +18,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.kilumanga.play.constant.ExceptionMessage;
+import com.kilumanga.play.constant.Property;
 import com.sun.mail.smtp.SMTPTransport;
 
 public class MailgunMailer {
@@ -60,8 +61,8 @@ public class MailgunMailer {
 		}
 
 		Properties properties = System.getProperties();
-		properties.put("mail.smtps.host", "smtp.mailgun.org");
-		properties.put("mail.smtps.auth", "true");
+		putProperty(properties, Property.MAIL_SMTPS_HOST);
+		putProperty(properties, Property.MAIL_SMTPS_AUTH);
 
 		Session session = Session.getInstance(properties, null);
 		Message message = new MimeMessage(session);
@@ -80,6 +81,10 @@ public class MailgunMailer {
 			transport.sendMessage(message, message.getAllRecipients());
 			return transport.getLastServerResponse();
 		}
+	}
+
+	private void putProperty(Properties properties, Property property) {
+		properties.put(property.getName(), property.getValue());
 	}
 
 	public String sendSmtpMail(String[] toAddresses, String subject, String text)
